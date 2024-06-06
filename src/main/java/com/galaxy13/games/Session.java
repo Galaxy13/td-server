@@ -16,7 +16,7 @@ public class Session {
         this.sessionId = sessionId;
     }
 
-    public void handleCommand(ClientCommand packet){
+    public byte[] handleCommand(ClientCommand packet){
         
     }
 }
