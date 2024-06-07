@@ -43,6 +43,9 @@ public class TDServer {
                     } catch (NoSessionException e){
                         logger.debug("Client requested command before starting session");
                         answer = "10".getBytes(StandardCharsets.UTF_8);
+                    } catch (IOException e) {
+                        logger.warn("State serialization failed", e);
+                        answer = "100".getBytes(StandardCharsets.UTF_8); // internal error
                     }
                     DatagramPacket responsePacket = new DatagramPacket(answer, answer.length, clientAddress, clientPort);
                     logger.trace("Server response from " + clientAddress + ": " + new String(answer, StandardCharsets.UTF_8));

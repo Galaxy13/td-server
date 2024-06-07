@@ -3,6 +3,7 @@ package com.galaxy13.games;
 import com.galaxy13.games.ddo.ClientCommand;
 import com.galaxy13.games.exceptions.NoSessionException;
 
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
@@ -17,7 +18,7 @@ public class Dispatcher {
 
     }
 
-    public byte[] handleDatagram(DatagramPacket packet) throws UnsupportedOperationException, NoSessionException{
+    public byte[] handleDatagram(DatagramPacket packet) throws UnsupportedOperationException, NoSessionException, IOException {
         ClientCommand command = new ClientCommand(packet);
         if (sessionMap.containsKey(command.getIp())){
             Session clientSession = sessionMap.get(packet.getAddress());
