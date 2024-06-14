@@ -1,7 +1,9 @@
-package com.galaxy13.games;
+package com.galaxy13.games.tdserver.client.routing;
 
-import com.galaxy13.games.ddo.ClientCommand;
-import com.galaxy13.games.exceptions.NoSessionException;
+import com.galaxy13.games.tdserver.Session;
+import com.galaxy13.games.tdserver.client.ClientOperations;
+import com.galaxy13.games.tdserver.ddo.ClientCommand;
+import com.galaxy13.games.tdserver.exceptions.session.NoSessionException;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

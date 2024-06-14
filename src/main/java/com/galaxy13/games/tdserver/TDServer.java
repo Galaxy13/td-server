@@ -1,6 +1,7 @@
-package com.galaxy13.games;
+package com.galaxy13.games.tdserver;
 
-import com.galaxy13.games.exceptions.NoSessionException;
+import com.galaxy13.games.tdserver.client.routing.Dispatcher;
+import com.galaxy13.games.tdserver.exceptions.session.NoSessionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

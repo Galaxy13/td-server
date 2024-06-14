@@ -1,6 +1,6 @@
-package com.galaxy13.games.ddo;
+package com.galaxy13.games.tdserver.ddo;
 
-import com.galaxy13.games.ClientOperations;
+import com.galaxy13.games.tdserver.client.ClientOperations;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;

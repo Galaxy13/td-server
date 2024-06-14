@@ -1,4 +1,4 @@
-package com.galaxy13.games;
+package com.galaxy13.games.tdserver.entities.mob;
 
 public enum Directions {
     UP(0.0, 0.5),

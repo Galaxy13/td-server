@@ -1,4 +1,4 @@
-package com.galaxy13.games;
+package com.galaxy13.games.tdserver.entities;
 
 public abstract class Entity {
     private final String name;

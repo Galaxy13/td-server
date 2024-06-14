@@ -1,4 +1,4 @@
-package com.galaxy13.games;
+package com.galaxy13.games.tdserver.client;
 
 public enum ClientOperations {
     START,

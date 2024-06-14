@@ -1,6 +1,11 @@
-package com.galaxy13.games;
+package com.galaxy13.games.tdserver;
 
-import com.galaxy13.games.ddo.ClientCommand;
+import com.galaxy13.games.tdserver.entities.mob.Directions;
+import com.galaxy13.games.tdserver.entities.Entity;
+import com.galaxy13.games.tdserver.entities.mob.Mob;
+import com.galaxy13.games.tdserver.entities.interfaces.Movable;
+import com.galaxy13.games.tdserver.ddo.ClientCommand;
+import com.galaxy13.games.tdserver.exceptions.session.EntityCreationException;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,9 +13,14 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static com.galaxy13.games.tdserver.generation.SessionGeneration.generateSessionId;
+import static com.galaxy13.games.tdserver.serialization.Serialize.serializeEntityCoordinates;
+import static com.galaxy13.games.tdserver.generation.EntityGenerator.generateEntity;
 
 public class Session {
     private final Logger logger = LoggerFactory.getLogger(Session.class);
@@ -20,39 +30,32 @@ public class Session {
 
     public Session(Integer sessionId) {
         this.sessionId = sessionId;
+        try {
+            sessionInit();
+        } catch (EntityCreationException e){
+            logger.error("Session initialize error", e);
+        }
+        logger.info("New session created. ID: {}", sessionId);
+    }
+
+    private void createNewMob(String entityName) throws EntityCreationException {
+        synchronized (sessionEntities) {
+            try {
+                sessionEntities.put(generateSessionId(), generateEntity(Mob.class, entityName));
+            } catch (InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
+                throw new EntityCreationException(entityName, e);
+            }
+        }
+    }
+
+    private void sessionInit() throws EntityCreationException{
         createNewMob("test_mob1");
         createNewMob("test_mob2");
         createNewMob("test_mob3");
         Mob playerMob = new Mob("test_mob4");
-        sessionEntities.put(generateId(), playerMob);
+        sessionEntities.put(generateSessionId(), playerMob);
         playerEntity = playerMob;
         logger.debug("Player entity created");
-        logger.info("New session created. ID: {}", sessionId);
-    }
-
-    private String generateId() {
-        logger.trace("ID entity generation requested");
-        String id = RandomStringUtils.random(8, "0123456789abcdef");
-        logger.trace("ID entity generated: {}", id);
-        return id;
-    }
-
-    private void createNewMob(String entityName) {
-        logger.trace("Creating new mob {}", entityName);
-        synchronized (sessionEntities) {
-            sessionEntities.put(generateId(), new Mob(entityName));
-        }
-        logger.debug("Created new mob {}", entityName);
-    }
-
-    private Map<String, Object> serializeEntityCoordinates(Entity entity){
-        logger.trace("Serializing entity coordinates...");
-        Map<String, Object> entityValues = new HashMap<>();
-        entityValues.put("x", entity.getCoordinateX());
-        entityValues.put("y", entity.getCoordinateY());
-        entityValues.put("name", entity.getName());
-        logger.trace("Serialization complete");
-        return entityValues;
     }
 
     private byte[] sessionState() throws IOException {

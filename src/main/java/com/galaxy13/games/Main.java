@@ -1,5 +1,7 @@
 package com.galaxy13.games;
 
+import com.galaxy13.games.tdserver.TDServer;
+
 import java.io.IOException;
 
 public class Main {
