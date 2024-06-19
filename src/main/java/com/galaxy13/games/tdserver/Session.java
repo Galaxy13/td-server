@@ -1,12 +1,11 @@
 package com.galaxy13.games.tdserver;
 
-import com.galaxy13.games.tdserver.entities.mob.Directions;
-import com.galaxy13.games.tdserver.entities.Entity;
-import com.galaxy13.games.tdserver.entities.mob.Mob;
-import com.galaxy13.games.tdserver.entities.interfaces.Movable;
 import com.galaxy13.games.tdserver.ddo.ClientCommand;
+import com.galaxy13.games.tdserver.entities.Entity;
+import com.galaxy13.games.tdserver.entities.interfaces.Movable;
+import com.galaxy13.games.tdserver.entities.mob.Directions;
+import com.galaxy13.games.tdserver.entities.mob.Mob;
 import com.galaxy13.games.tdserver.exceptions.session.EntityCreationException;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,9 +17,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static com.galaxy13.games.tdserver.generation.SessionGeneration.generateSessionId;
-import static com.galaxy13.games.tdserver.serialization.Serialize.serializeEntityCoordinates;
 import static com.galaxy13.games.tdserver.generation.EntityGenerator.generateEntity;
+import static com.galaxy13.games.tdserver.generation.SessionGeneration.generateSessionId;
 
 public class Session {
     private final Logger logger = LoggerFactory.getLogger(Session.class);
@@ -32,7 +30,7 @@ public class Session {
         this.sessionId = sessionId;
         try {
             sessionInit();
-        } catch (EntityCreationException e){
+        } catch (EntityCreationException e) {
             logger.error("Session initialize error", e);
         }
         logger.info("New session created. ID: {}", sessionId);
@@ -42,13 +40,14 @@ public class Session {
         synchronized (sessionEntities) {
             try {
                 sessionEntities.put(generateSessionId(), generateEntity(Mob.class, entityName));
-            } catch (InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
+            } catch (InvocationTargetException | InstantiationException | IllegalAccessException |
+                     NoSuchMethodException e) {
                 throw new EntityCreationException(entityName, e);
             }
         }
     }
 
-    private void sessionInit() throws EntityCreationException{
+    private void sessionInit() throws EntityCreationException {
         createNewMob("test_mob1");
         createNewMob("test_mob2");
         createNewMob("test_mob3");
@@ -64,8 +63,8 @@ public class Session {
              ObjectOutputStream out = new ObjectOutputStream(byteMap)) {
             Map<String, List<Map<String, Object>>> outMap = new HashMap<>();
             List<Map<String, Object>> entityList = new ArrayList<>();
-            for (Entity entity: sessionEntities.values()){
-                entityList.add(serializeEntityCoordinates(entity));
+            for (Entity entity : sessionEntities.values()) {
+                entityList.add(entity.serialize());
             }
             outMap.put("entities", entityList);
             out.writeObject(outMap);

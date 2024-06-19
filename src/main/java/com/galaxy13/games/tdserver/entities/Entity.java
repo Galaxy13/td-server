@@ -1,11 +1,15 @@
 package com.galaxy13.games.tdserver.entities;
 
-public abstract class Entity {
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
+public abstract class Entity implements Serializable {
     private final String name;
     protected double coordinateX;
     protected double coordinateY;
 
-    public Entity(String entityName){
+    public Entity(String entityName) {
         this.name = entityName;
         this.coordinateX = 0.0;
         this.coordinateY = 0.0;
@@ -19,7 +23,15 @@ public abstract class Entity {
         return coordinateY;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
+    }
+
+    public Map<String, Object> serialize() {
+        Map<String, Object> entityInfo = new HashMap<>();
+        entityInfo.put("name", name);
+        entityInfo.put("x", coordinateX);
+        entityInfo.put("y", coordinateY);
+        return entityInfo;
     }
 }
