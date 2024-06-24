@@ -1,5 +1,6 @@
 package com.galaxy13.games.tdserver.gamefield.zone;
 
-public abstract class Zone {
-    ZoneType zoneType;
+public enum ZoneType {
+    PATH,
+    OBSTACLE
 }
