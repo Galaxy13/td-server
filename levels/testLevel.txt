@@ -20,3 +20,4 @@
 7,11:PATH;
 7,12:PATH;
 7,13:PATH;
+[/zones]
