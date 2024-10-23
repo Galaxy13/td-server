@@ -3,16 +3,21 @@ package com.galaxy13.games.objects;
 import com.galaxy13.games.field.GameField;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public abstract class GameObject {
-    private final Long id;
+    private final UUID id;
     private final String name;
     private final GameField gameField;
 
-    public GameObject(Long id, String name, GameField gameField) {
+    protected GameObject(UUID id, String name, GameField gameField) {
         this.id = id;
         this.name = name;
         this.gameField = gameField;
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     @Override
