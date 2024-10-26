@@ -2,7 +2,6 @@ package com.galaxy13.games.manager;
 
 import com.galaxy13.games.cache.Cache;
 import com.galaxy13.games.cache.GameCache;
-import com.galaxy13.games.cache.State;
 import com.galaxy13.games.events.EventProcessor;
 import com.galaxy13.games.events.Processor;
 import com.galaxy13.games.field.GameField;
@@ -21,14 +20,10 @@ public class GameManager implements CacheManager, EventManager{
         this.eventProcessor = new EventProcessor(gameField, objectHandler, this.cache);
     }
 
-    @Override
-    public State getState() {
-        return cache.getChanges();
-    }
 
     @Override
-    public void sendClientCommand(String command) {
-
+    public String sendClientCommand(String command) {
+        return "";
     }
 
     @Override
