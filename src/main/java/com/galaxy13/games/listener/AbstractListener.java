@@ -15,7 +15,8 @@ public abstract class AbstractListener implements Listener{
     public AbstractListener(CacheManager cacheManager,
                             String listenerName,
                             String host,
-                            int port, Class<? extends AbstractListener> listenerClass) {
+                            int port,
+                            Class<? extends AbstractListener> listenerClass) {
         this.listenerName = listenerName;
         this.host = host;
         this.port = port;

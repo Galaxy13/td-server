@@ -4,7 +4,7 @@ import com.galaxy13.games.manager.CacheManager;
 
 public class TCPListener extends AbstractListener{
     public TCPListener(CacheManager cacheManager, String listenerName, String host, int port) {
-        super(cacheManager, listenerName, host, port);
+        super(cacheManager, listenerName, host, port, TCPListener.class);
     }
 
     @Override

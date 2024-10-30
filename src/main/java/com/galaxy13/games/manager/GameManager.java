@@ -15,11 +15,10 @@ public class GameManager implements CacheManager, EventManager{
 
     public GameManager() {
         this.cache = new GameCache();
-        GameField gameField = new TDField();
+        GameField gameField = TDField.createBasicField(10.0F, 10.0F);
         ObjectHandler objectHandler = new ObjectHandlerImpl();
         this.eventProcessor = new EventProcessor(gameField, objectHandler, this.cache);
     }
-
 
     @Override
     public String sendClientCommand(String command) {
