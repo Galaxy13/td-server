@@ -5,7 +5,7 @@ import com.galaxy13.games.field.GameField;
 import java.util.Objects;
 import java.util.UUID;
 
-public abstract class GameObject {
+public abstract class GameObject{
     private final UUID id;
     private final String name;
     private final GameField gameField;
